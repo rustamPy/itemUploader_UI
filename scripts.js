@@ -136,7 +136,7 @@ const getTodos = async () => {
             `;
             todoEl.innerHTML = `
                 <div style="display: flex; flex-direction: column;">
-                    <span style="font-size: 14px; font-weight: bold;">${d.name}</span>
+                    <span style="font-size: 14px; font-weight: bold;">${d.title}</span>
                     <span style="font-size: 12px; color: #666;">${d.desc}</span>
                 </div>
                 <button style="padding: 5px 10px; cursor: pointer;">
