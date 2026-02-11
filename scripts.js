@@ -135,15 +135,17 @@ const getTodos = async () => {
                     <span style="font-size: 14px; font-weight: bold;">${d.title}</span>
                     <span style="font-size: 12px; color: #666;">${d.desc}</span>
                 </div>
-                <button id="complete" style="padding: 5px 5px; cursor: pointer;">
-                    ${d.completed ? "✅ Done" : "Mark Complete"}
-                </button>
-                <button id="delete" style="padding: 5px 5px; cursor: pointer;">
-                   Delete
-                </button>
-            `;
-            todoEl.querySelector("#complete").addEventListener("click", () => markComplete(d.id));
-            todoEl.querySelector("#delete").addEventListener("click", () => deleteItem(d.id));
+                `
+            const completeBtn = document.createElement("button");
+            completeBtn.textContent = d.completed ? "✅ Done" : "Mark Complete";
+            completeBtn.onclick = () => markComplete(d.id);
+
+            const deleteBtn = document.createElement("button");
+            deleteBtn.textContent = "Delete";
+            deleteBtn.onclick = () => deleteItem(d.id);
+
+            todoEl.appendChild(completeBtn);
+            todoEl.appendChild(deleteBtn);
 
             todosContainer.appendChild(todoEl);
         });
