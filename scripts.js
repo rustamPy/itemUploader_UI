@@ -135,11 +135,16 @@ const getTodos = async () => {
                     <span style="font-size: 14px; font-weight: bold;">${d.title}</span>
                     <span style="font-size: 12px; color: #666;">${d.desc}</span>
                 </div>
-                <button style="padding: 5px 5px; cursor: pointer;">
+                <button id="complete" style="padding: 5px 5px; cursor: pointer;">
                     ${d.completed ? "✅ Done" : "Mark Complete"}
                 </button>
+                <button id="delete" style="padding: 5px 5px; cursor: pointer;">
+                   Delete
+                </button>
             `;
-            todoEl.querySelector("button").addEventListener("click", () => markComplete(d.id));
+            todoEl.getElementById("complete").addEventListener("click", () => markComplete(d.id));
+            todoEl.getElementById("delete").addEventListener("click", () => deleteItem(d.id));
+
             todosContainer.appendChild(todoEl);
         });
     } catch (error) {
@@ -149,13 +154,8 @@ const getTodos = async () => {
 };
 
 const markComplete = async (id) => {
-    if (!isAuthenticated()) {
-        alert("Please login first");
-        return;
-    }
 
     try {
-        console.log(`Marking todo ${id} as complete...`);
         const response = await fetch(`${API_BASE}/todo/${id}/complete`, {
             method: "PATCH",
             headers: getAuthHeaders()
@@ -172,8 +172,24 @@ const markComplete = async (id) => {
         }
 
         const data = await response.json();
-        console.log("Toggle result:", data);
         getTodos(); // Refresh list
+    } catch (error) {
+        console.error("Error marking todo complete:", error);
+        alert("Failed to update todo");
+    }
+};
+
+const deleteItem = async (id) => {
+    try {
+        const response = await fetch(`${API_BASE}/todo/delete/${id}`, {
+            method: "DELETE",
+            headers: getAuthHeaders()
+        });
+
+        if (!response.ok) {
+            throw new Error(`Deletion error!`)
+        }
+        getTodos();
     } catch (error) {
         console.error("Error marking todo complete:", error);
         alert("Failed to update todo");
