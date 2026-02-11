@@ -1,65 +1,90 @@
+// "http://localhost:8000/v1"
+// "https://itemuploader.onrender.com/v1";
 const API_BASE = "https://itemuploader.onrender.com/v1";
 
-const ENDPOINTS = [
-    {
-        name: "Health Check!",
-        method: "GET",
-        path: "/healthz"
-    },
-    {
-        name: "Add",
-        method: "POST",
-        path: "/add",
-        body: { job_id: 123 }
+
+const todosContainer = document.getElementById("todos");
+
+const getTodos = async () => {
+    try {
+        const suffix = "/todos";
+        const response = await fetch(API_BASE + suffix);
+        const data = await response.json();
+
+        todosContainer.innerHTML = "";
+        data.forEach(d => {
+            const todoEl = document.createElement("div");
+            todoEl.style = "padding: 5px; border-radius: 5px; border: 1px solid black; width: 200px; margin-bottom: 5px; display: flex; justify-content: space-between; align-items: center;";
+
+            const nameEl = document.createElement("span");
+            nameEl.textContent = d.name;
+
+            const btn = document.createElement("button");
+            if (d.completed) {
+                btn.textContent = "Completed ✅";
+                todoEl.style.backgroundColor = "#b2ffb7"
+            } else {
+                btn.textContent = "Mark Complete";
+            }
+
+            btn.onclick = () => markComplete(d.id);
+
+            todoEl.appendChild(nameEl);
+            todoEl.appendChild(btn);
+
+            todosContainer.appendChild(todoEl);
+        });
+    } catch (error) {
+        console.error("Error fetching todos:", error);
     }
-];
+};
 
-const buttonsContainer = document.getElementById("buttons");
-const resultEl = document.getElementById("result");
+const markComplete = async (id) => {
+    try {
+        const response = await fetch(`${API_BASE}/todo/${id}/complete`, {
+            method: "PATCH",
+        });
+        const data = await response.json();
+        console.log(data);
+        getTodos(); // refresh list
+    } catch (error) {
+        console.error("Error marking todo complete:", error);
+    }
+};
 
-ENDPOINTS.forEach((ep) => {
-    const btn = document.createElement("button");
-    btn.textContent = ep.name;
+const formsContainer = document.getElementById("forms");
 
-    btn.addEventListener("click", () => callApi(ep, btn));
+const getForm = async () => {
+    const suffix = "/form/add";
 
-    buttonsContainer.appendChild(btn);
+}
+
+todoForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById("todoName").value;
+    const desc = document.getElementById("todoDesc").value;
+
+    try {
+        const response = await fetch(`${API_BASE}/todo/add`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                name,
+                desc,
+                created_at: new Date().toISOString()
+            })
+        });
+        const data = await response.json();
+        console.log("Added:", data);
+
+        todoForm.reset();
+        getTodos();
+    } catch (error) {
+        console.error("Error adding todo:", error);
+    }
 });
 
-async function callApi(endpoint, button) {
-    button.disabled = true;
-    resultEl.textContent = "Loading...";
-
-    try {
-        const options = {
-            method: endpoint.method,
-            headers: { "Content-Type": "application/json" },
-        };
-
-        if (endpoint.body && endpoint.method !== "GET") {
-            options.body = JSON.stringify(endpoint.body);
-        }
-
-
-        const response = await fetch(API_BASE + endpoint.path, options);
-        const json = await response.json();
-        const text = await response.text();
-
-
-        resultEl.textContent = response.ok
-            ? pretty(text)
-            : `❌ ${response.status}\n${text}`;
-    } catch (err) {
-
-    } finally {
-        button.disabled = false;
-    }
-}
-
-function pretty(text) {
-    try {
-        return JSON.stringify(JSON.parse(text), null, 2);
-    } catch {
-        return text;
-    }
-}
+getTodos();
