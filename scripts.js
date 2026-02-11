@@ -88,7 +88,7 @@ const getTodos = async () => {
         const headers = getAuthHeaders();
         console.log("Request headers:", headers);
 
-        const response = await fetch(`${API_BASE}/todos`, {
+        const response = await fetch(`${API_BASE}/todo/all`, {
             method: "GET",
             headers: headers
         });
