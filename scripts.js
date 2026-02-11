@@ -1,7 +1,22 @@
 // "http://localhost:8000/v1"
 // "https://itemuploader.onrender.com/v1";
-const API_BASE = "https://itemuploader.onrender.com/v1";
+const API_BASE = "https://itemuploader.onrender.com/v1"
+const TOKEN_KEY = "auth_token";
 
+const loginWithGithub = () => {
+    window.location.href = `${API_BASE}/auth/github`;
+};
+
+const checkAuth = () => {
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get("token");
+    if (token) {
+        localStorage.setItem(TOKEN_KEY, token);
+        window.history.replaceState({}, document.title, window.location.pathname);
+    }
+};
+
+checkAuth();
 
 const todosContainer = document.getElementById("todos");
 
