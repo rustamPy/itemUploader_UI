@@ -142,8 +142,8 @@ const getTodos = async () => {
                    Delete
                 </button>
             `;
-            todoEl.getElementById("complete").addEventListener("click", () => markComplete(d.id));
-            todoEl.getElementById("delete").addEventListener("click", () => deleteItem(d.id));
+            todoEl.querySelector("#complete").addEventListener("click", () => markComplete(d.id));
+            todoEl.querySelector("#delete").addEventListener("click", () => deleteItem(d.id));
 
             todosContainer.appendChild(todoEl);
         });
