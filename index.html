@@ -3,13 +3,102 @@
 
 <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple To-Do List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        #auth-section {
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 8px 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        #loginBtn {
+            background-color: #24292e;
+            color: white;
+        }
+
+        #loginBtn:hover {
+            background-color: #0366d6;
+        }
+
+        #logoutBtn {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        #logoutBtn:hover {
+            background-color: #c82333;
+        }
+
+        #todoForm {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+
+        #todoForm input {
+            padding: 8px;
+            margin-right: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 200px;
+        }
+
+        #todoForm button {
+            background-color: #28a745;
+            color: white;
+        }
+
+        #todoForm button:hover {
+            background-color: #218838;
+        }
+
+        a {
+            color: #0366d6;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
 
 <body>
-    <button onclick="loginWithGithub()">Login with GitHub</button>
+    <div id="auth-section">
+        <button id="loginBtn" onclick="loginWithGithub()">Login with GitHub</button>
+        <button id="logoutBtn" onclick="logout()" style="display: none;">Logout</button>
+        <span id="userInfo" style="margin-left: 10px; font-weight: bold;"></span>
+    </div>
+
     <h1>Simple To-Do List</h1>
-    <a href="https://itemuploader.onrender.com/v1/docs" target="_blank">api -
-        https://itemuploader.onrender.com/v1/docs</a>
-    <div id="todos"></div>
+
+    <p>
+        <a href="https://itemuploader.onrender.com/v1/docs" target="_blank">
+            API Documentation
+        </a>
+    </p>
+
+    <div id="todos">
+        <p>Loading...</p>
+    </div>
 
     <div id="forms">
         <form id="todoForm">
