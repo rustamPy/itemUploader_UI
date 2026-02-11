@@ -77,7 +77,7 @@ const getTodos = async () => {
 
             todoEl.innerHTML = `
         <div style="display: flex; flex-direction: column;">
-            <span style="font-size: 11px;">${d.name}</span>
+            <span style="font-size: 11px;">${d.title}</span>
             <span style="font-size: 9px;">${d.desc}</span>
         </div>
         <button>
