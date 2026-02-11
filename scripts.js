@@ -14,24 +14,29 @@ const getTodos = async () => {
         todosContainer.innerHTML = "";
         data.forEach(d => {
             const todoEl = document.createElement("div");
-            todoEl.style = "padding: 5px; border-radius: 5px; border: 1px solid black; width: 200px; margin-bottom: 5px; display: flex; justify-content: space-between; align-items: center;";
+            todoEl.style.cssText = `
+        padding: 5px;
+        border-radius: 5px;
+        border: 1px solid black;
+        width: 300px;
+        margin-bottom: 5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        ${d.completed ? "background-color: #b2ffb7;" : ""}
+    `;
 
-            const nameEl = document.createElement("span");
-            nameEl.textContent = d.name;
+            todoEl.innerHTML = `
+        <div style="display: flex; flex-direction: column;">
+            <span style="font-size: 11px;">${d.name}</span>
+            <span style="font-size: 9px;">${d.desc}</span>
+        </div>
+        <button>
+            ${d.completed ? "Completed ✅" : "Mark Complete"}
+        </button>
+    `;
 
-            const btn = document.createElement("button");
-            if (d.completed) {
-                btn.textContent = "Completed ✅";
-                todoEl.style.backgroundColor = "#b2ffb7"
-            } else {
-                btn.textContent = "Mark Complete";
-            }
-
-            btn.onclick = () => markComplete(d.id);
-
-            todoEl.appendChild(nameEl);
-            todoEl.appendChild(btn);
-
+            todoEl.querySelector("button").addEventListener("click", () => markComplete(d.id));
             todosContainer.appendChild(todoEl);
         });
     } catch (error) {
