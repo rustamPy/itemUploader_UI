@@ -138,11 +138,11 @@ const getTodos = async () => {
                 `
             const completeBtn = document.createElement("button");
             completeBtn.textContent = d.completed ? "✅ Done" : "Mark Complete";
-            completeBtn.onclick = () => markComplete(d.id);
+            completeBtn.addEventListener("click", () => markComplete(d.id));
 
             const deleteBtn = document.createElement("button");
             deleteBtn.textContent = "Delete";
-            deleteBtn.onclick = () => deleteItem(d.id);
+            deleteBtn.addEventListener("click", () => deleteItem(d.id));
 
             todoEl.appendChild(completeBtn);
             todoEl.appendChild(deleteBtn);
@@ -174,7 +174,7 @@ const markComplete = async (id) => {
         }
 
         const data = await response.json();
-        getTodos(); // Refresh list
+        getTodos();
     } catch (error) {
         console.error("Error marking todo complete:", error);
         alert("Failed to update todo");
