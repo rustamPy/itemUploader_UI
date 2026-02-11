@@ -1,9 +1,7 @@
-// Configuration
 const API_BASE = "https://itemuploader.onrender.com/v1";
 const TOKEN_KEY = "auth_token";
 const USER_ID_KEY = "user_id";
 
-// Authentication functions
 const loginWithGithub = () => {
     window.location.href = `${API_BASE}/auth/github`;
 };
@@ -75,10 +73,8 @@ const updateAuthUI = () => {
     }
 };
 
-// Initialize auth on page load
 checkAuth();
 
-// Todo functions
 const todosContainer = document.getElementById("todos");
 
 const getTodos = async () => {
@@ -124,7 +120,7 @@ const getTodos = async () => {
         data.todos.forEach(d => {
             const todoEl = document.createElement("div");
             todoEl.style.cssText = `
-                padding: 10px;
+                padding: 5px;
                 border-radius: 5px;
                 border: 1px solid #ccc;
                 width: 300px;
@@ -139,7 +135,7 @@ const getTodos = async () => {
                     <span style="font-size: 14px; font-weight: bold;">${d.title}</span>
                     <span style="font-size: 12px; color: #666;">${d.desc}</span>
                 </div>
-                <button style="padding: 5px 10px; cursor: pointer;">
+                <button style="padding: 5px 5px; cursor: pointer;">
                     ${d.completed ? "✅ Done" : "Mark Complete"}
                 </button>
             `;
@@ -184,7 +180,6 @@ const markComplete = async (id) => {
     }
 };
 
-// Form handling
 const todoForm = document.getElementById("todoForm");
 
 if (todoForm) {
@@ -205,9 +200,8 @@ if (todoForm) {
                 method: "POST",
                 headers: getAuthHeaders(),
                 body: JSON.stringify({
-                    name,
+                    title,
                     desc,
-                    completed: false,
                     created_at: new Date().toISOString()
                 })
             });
