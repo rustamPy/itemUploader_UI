@@ -191,11 +191,11 @@ if (todoForm) {
             return;
         }
 
-        const name = document.getElementById("todoName").value;
+        const title = document.getElementById("todoTitle").value;
         const desc = document.getElementById("todoDesc").value;
 
         try {
-            console.log("Adding todo:", { name, desc });
+            console.log("Adding todo:", { title, desc });
             const response = await fetch(`${API_BASE}/todo/add`, {
                 method: "POST",
                 headers: getAuthHeaders(),
