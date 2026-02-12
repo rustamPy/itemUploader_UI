@@ -140,12 +140,12 @@ const getTodos = async () => {
             completeBtn.textContent = d.completed ? "✅ Done" : "Mark Complete";
             completeBtn.addEventListener("click", () => markComplete(d.id));
 
-            const deleteBtn = document.createElement("button");
-            deleteBtn.textContent = "Delete";
-            deleteBtn.addEventListener("click", () => deleteItem(d.id));
+            // const deleteBtn = document.createElement("button");
+            // deleteBtn.textContent = "Delete";
+            // deleteBtn.addEventListener("click", () => deleteItem(d.id));
 
             todoEl.appendChild(completeBtn);
-            todoEl.appendChild(deleteBtn);
+            // todoEl.appendChild(deleteBtn);
 
             todosContainer.appendChild(todoEl);
         });
@@ -156,11 +156,29 @@ const getTodos = async () => {
 };
 
 const markComplete = async (id) => {
-
     try {
-        const response = await fetch(`${API_BASE}/todo/${id}/complete`, {
-            method: "PATCH",
+        const currentTodos = await fetch(`${API_BASE}/todo/all`, {
+            method: "GET",
             headers: getAuthHeaders()
+        });
+
+        if (!currentTodos.ok) {
+            throw new Error('Failed to fetch current todo status');
+        }
+
+        const todosData = await currentTodos.json();
+        const currentTodo = todosData.todos.find(t => t.id === id);
+
+        if (!currentTodo) {
+            throw new Error('Todo not found');
+        }
+
+        const response = await fetch(`${API_BASE}/todo/update/${id}`, {
+            method: "PATCH",
+            headers: getAuthHeaders(),
+            body: JSON.stringify({
+                completed: !currentTodo.completed
+            })
         });
 
         if (response.status === 401) {
