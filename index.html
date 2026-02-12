@@ -97,6 +97,14 @@
             width: 200px;
         }
 
+        #todoForm select {
+            padding: 8px;
+            margin-right: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
         #todoForm button {
             background-color: #28a745;
             color: white;
@@ -113,6 +121,55 @@
 
         a:hover {
             text-decoration: underline;
+        }
+
+        .progress-section {
+            margin: 15px 0;
+            padding: 8px;
+            background-color: #f5f5f5;
+            border: 1px solid #999;
+            border-radius: 0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 16px;
+            background-color: #e0e0e0;
+            border: 1px solid #999;
+            margin: 5px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: #4CAF50;
+            transition: width 0.3s;
+        }
+
+        .section-header {
+            font-weight: bold;
+            font-size: 13px;
+            margin: 10px 0 5px 0;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .section-header:hover {
+            text-decoration: underline;
+        }
+
+        .section-count {
+            display: inline;
+            background-color: #ccc;
+            padding: 2px 6px;
+            border: 1px solid #999;
+            border-radius: 0;
+            margin-left: 5px;
+            font-size: 11px;
+        }
+
+        .todo-section {
+            margin: 5px 0;
         }
     </style>
 </head>
@@ -133,13 +190,32 @@
             API Documentation
         </a>
     </p>
+    <div id="progressSection" class="progress-section" style="display: none;">
+        <div style="font-size: 12px; margin-bottom: 5px;">
+            Progress: <span id="progressText">0/0</span>
+        </div>
+        <div class="progress-bar">
+            <div id="progressFill" class="progress-fill" style="width: 0%;"></div>
+        </div>
+    </div>
     <div id="todos">
         <p>Loading...</p>
     </div>
     <div id="forms">
         <form id="todoForm">
             <input type="text" id="todoTitle" placeholder="Todo title" required />
-            <input type="text" id="todoDesc" placeholder="Description" required />
+            <input type="text" id="todoDesc" placeholder="Description" />
+            <select id="todoDuration">
+                <option value="">Select Duration</option>
+                <option value="1">1 Hour</option>
+                <option value="2">2 Hours</option>
+                <option value="3">3 Hours</option>
+                <option value="4">4 Hours</option>
+                <option value="5">5 Hours</option>
+                <option value="6">6 Hours</option>
+                <option value="7">7 Hours</option>
+                <option value="8">8 Hours</option>
+            </select>
             <button type="submit">Add Todo</button>
         </form>
     </div>
