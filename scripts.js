@@ -1,15 +1,30 @@
-const API_BASE = "https://itemuploader.onrender.com/v1";
+const API_BASE = "http://127.0.0.1:8000/v1";
 const TOKEN_KEY = "auth_token";
 const USER_ID_KEY = "user_id";
+const USER_NAME_KEY = "username";
+const USER_AVATAR_URL = "avatar_url";
+
+
+console.error(API_BASE)
 
 const loginWithGithub = () => {
     window.location.href = `${API_BASE}/auth/github`;
+};
+
+const loginWithGoogle = () => {
+    window.location.href = `${API_BASE}/auth/google`;
 };
 
 const checkAuth = () => {
     const params = new URLSearchParams(window.location.search);
     const token = params.get("token");
     const userId = params.get("user_id");
+    const userName = params.get("username");
+    const userAvatar = params.get("avatar_url");
+    console.log('\n\n\n\n\n\n\n')
+    console.log(params)
+
+
     const error = params.get("error");
 
     if (error) {
@@ -21,6 +36,8 @@ const checkAuth = () => {
     if (token && userId) {
         localStorage.setItem(TOKEN_KEY, token);
         localStorage.setItem(USER_ID_KEY, userId);
+        localStorage.setItem(USER_NAME_KEY, userName);
+        localStorage.setItem(USER_AVATAR_URL, userAvatar);
         // Clean URL
         window.history.replaceState({}, document.title, window.location.pathname);
         console.log("Authentication successful! Token saved.");
@@ -53,21 +70,41 @@ const isAuthenticated = () => {
 const logout = () => {
     localStorage.removeItem(TOKEN_KEY);
     localStorage.removeItem(USER_ID_KEY);
+    localStorage.removeItem(USER_NAME_KEY);
+    localStorage.removeItem(USER_AVATAR_URL);
     window.location.reload();
 };
 
 const updateAuthUI = () => {
-    const loginBtn = document.getElementById("loginBtn");
+    const loginBtnGithub = document.getElementById("loginBtnGi");
+    const loginBtnGoogle = document.getElementById("loginBtnGo");
     const logoutBtn = document.getElementById("logoutBtn");
     const userInfo = document.getElementById("userInfo");
+    const userAvatar = document.getElementById("userAvatar");
 
     if (isAuthenticated()) {
-        if (loginBtn) loginBtn.style.display = "none";
+        if (loginBtnGithub) loginBtnGithub.style.display = "none";
+        if (loginBtnGoogle) loginBtnGoogle.style.display = "none";
         if (logoutBtn) logoutBtn.style.display = "inline-block";
         const userId = localStorage.getItem(USER_ID_KEY);
-        if (userInfo) userInfo.textContent = `Logged in (User ID: ${userId})`;
+        const userName = localStorage.getItem(USER_NAME_KEY);
+        const userAvatarURL = localStorage.getItem(USER_AVATAR_URL);
+
+        if (userInfo) {
+            userInfo.textContent = `Logged in (User ID: ${userId.slice(0, 8)}****; Username: ${userName})`;
+            userInfo.style.cursor = "pointer";
+            userInfo.addEventListener("mouseover", () => {
+                userInfo.textContent = `Logged in (User ID: ${userId}; Username: ${userName})`;
+            });
+            userInfo.addEventListener("mouseout", () => {
+                userInfo.textContent = `Logged in (User ID: ${userId.slice(0, 8)}****; Username: ${userName})`;
+            });
+        }
+
+        if (userAvatarURL) userAvatar.src = userAvatarURL;
     } else {
-        if (loginBtn) loginBtn.style.display = "inline-block";
+        if (loginBtnGithub) loginBtnGithub.style.display = "inline-block";
+        if (loginBtnGoogle) loginBtnGoogle.style.display = "inline-block";
         if (logoutBtn) logoutBtn.style.display = "none";
         if (userInfo) userInfo.textContent = "";
     }
@@ -79,7 +116,7 @@ const todosContainer = document.getElementById("todos");
 
 const getTodos = async () => {
     if (!isAuthenticated()) {
-        todosContainer.innerHTML = "<p>Please login with GitHub to view your todos</p>";
+        todosContainer.innerHTML = "<p>Please login to view your todos</p>";
         return;
     }
 
@@ -126,26 +163,41 @@ const getTodos = async () => {
                 width: 300px;
                 margin-bottom: 10px;
                 display: flex;
-                justify-content: space-between;
-                align-items: center;
+                flex-direction: column;
+                gap: 10px;
                 ${d.completed ? "background-color: #b2ffb7;" : "background-color: #fff;"}
             `;
-            todoEl.innerHTML = `
-                <div style="display: flex; flex-direction: column;">
-                    <span style="font-size: 14px; font-weight: bold;">${d.title}</span>
-                    <span style="font-size: 12px; color: #666;">${d.desc}</span>
-                </div>
-                `
+
+            const deleteBtn = document.createElement("button");
+            deleteBtn.textContent = "Delete";
+            deleteBtn.style.cssText = `
+                align-self: flex-end;
+                padding: 5px 10px;
+                background-color: #ff6b6b;
+                color: white;
+                border: none;
+                border-radius: 3px;
+                cursor: pointer;
+            `;
+            deleteBtn.addEventListener("click", () => deleteItem(d.id));
+
+            const contentDiv = document.createElement("div");
+            contentDiv.style.cssText = `
+                display: flex;
+                flex-direction: column;
+            `;
+            contentDiv.innerHTML = `
+                <span style="font-size: 14px; font-weight: bold;">${d.title}</span>
+                <span style="font-size: 12px; color: #666;">${d.desc}</span>
+            `;
+
             const completeBtn = document.createElement("button");
             completeBtn.textContent = d.completed ? "✅ Done" : "Mark Complete";
             completeBtn.addEventListener("click", () => markComplete(d.id));
 
-            // const deleteBtn = document.createElement("button");
-            // deleteBtn.textContent = "Delete";
-            // deleteBtn.addEventListener("click", () => deleteItem(d.id));
-
+            todoEl.appendChild(deleteBtn);
+            todoEl.appendChild(contentDiv);
             todoEl.appendChild(completeBtn);
-            // todoEl.appendChild(deleteBtn);
 
             todosContainer.appendChild(todoEl);
         });
@@ -223,7 +275,7 @@ if (todoForm) {
         e.preventDefault();
 
         if (!isAuthenticated()) {
-            alert("Please login with GitHub first");
+            alert("Please login first");
             return;
         }
 
@@ -270,7 +322,7 @@ if (isAuthenticated()) {
     getTodos();
 } else {
     if (todosContainer) {
-        todosContainer.innerHTML = "<p>Please login with GitHub to view your todos</p>";
+        todosContainer.innerHTML = "<p>Please login to view your todos</p>";
     }
 }
 
