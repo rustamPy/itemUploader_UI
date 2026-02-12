@@ -6,11 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simple To-Do List</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 20px;
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 10px;
         }
 
         #auth-section {
@@ -20,8 +24,12 @@
             border-radius: 5px;
             position: relative;
             padding-right: 60px;
-            width: max-content;
-            min-width: 750px;
+            width: 100%;
+            min-width: auto;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
         }
 
         #userAvatar {
@@ -86,28 +94,33 @@
             padding: 15px;
             background-color: #f9f9f9;
             border-radius: 5px;
-            min-width: 750px;
+            width: 100%;
+            min-width: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
 
         #todoForm input {
             padding: 8px;
-            margin-right: 10px;
             border: 1px solid #ddd;
             border-radius: 4px;
-            width: 200px;
+            width: 100%;
+            font-size: 14px;
         }
 
         #todoForm select {
             padding: 8px;
-            margin-right: 10px;
             border: 1px solid #ddd;
             border-radius: 4px;
             font-size: 14px;
+            width: 100%;
         }
 
         #todoForm button {
             background-color: #28a745;
             color: white;
+            width: 100%;
         }
 
         #todoForm button:hover {
@@ -170,6 +183,166 @@
 
         .todo-section {
             margin: 5px 0;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin: 15px 0 10px 0;
+        }
+
+        p {
+            font-size: 14px;
+            margin: 10px 0;
+        }
+
+        /* Mobile Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                margin: 10px auto;
+                padding: 5px;
+            }
+
+            #auth-section {
+                padding: 8px;
+                padding-right: 50px;
+            }
+
+            #userAvatar {
+                width: 35px;
+                height: 35px;
+            }
+
+            button {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+
+            #loginBtnGi,
+            #loginBtnGo {
+                margin-right: 5px;
+            }
+
+            #userInfo {
+                font-size: 12px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            a {
+                font-size: 12px;
+            }
+
+            .section-header {
+                font-size: 12px;
+            }
+
+            .section-count {
+                font-size: 10px;
+            }
+
+            .todo-item {
+                width: 100% !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                margin: 5px auto;
+                padding: 5px;
+            }
+
+            #auth-section {
+                padding: 6px;
+                padding-right: 45px;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            #userAvatar {
+                width: 30px;
+                height: 30px;
+                top: 8px;
+                right: 5px;
+            }
+
+            button {
+                padding: 5px 10px;
+                font-size: 11px;
+                width: auto;
+            }
+
+            #loginBtnGi,
+            #loginBtnGo {
+                margin-right: 3px;
+            }
+
+            #userInfo {
+                font-size: 10px;
+                margin-left: 5px;
+            }
+
+            #todoForm {
+                padding: 10px;
+                margin: 10px 0;
+                gap: 8px;
+            }
+
+            #todoForm input,
+            #todoForm select {
+                padding: 6px;
+                font-size: 12px;
+            }
+
+            #todoForm button {
+                padding: 6px;
+            }
+
+            h1 {
+                font-size: 18px;
+                margin: 10px 0 8px 0;
+            }
+
+            p {
+                font-size: 12px;
+            }
+
+            a {
+                font-size: 11px;
+            }
+
+            .progress-section {
+                margin: 10px 0;
+                padding: 6px;
+            }
+
+            .progress-bar {
+                height: 14px;
+                margin: 4px 0;
+            }
+
+            .section-header {
+                font-size: 11px;
+                margin: 8px 0 4px 0;
+            }
+
+            .section-count {
+                font-size: 9px;
+                padding: 1px 4px;
+                margin-left: 3px;
+            }
+
+            .todo-section {
+                margin: 3px 0;
+            }
+
+            .todo-item {
+                width: 100% !important;
+                padding: 1px 4px !important;
+                min-height: 18px !important;
+                gap: 2px !important;
+            }
         }
     </style>
 </head>
