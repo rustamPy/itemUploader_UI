@@ -1,4 +1,9 @@
-const API_BASE = "https://itemuploader.onrender.com/v1";
+// Detect environment and set API_BASE accordingly
+const API_BASE =
+    window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+        ? "http://127.0.0.1:8000/v1"
+        : "https://itemuploader.onrender.com/v1";
+
 const TOKEN_KEY = "auth_token";
 const USER_ID_KEY = "user_id";
 const USER_NAME_KEY = "username";
