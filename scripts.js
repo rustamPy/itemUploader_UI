@@ -278,7 +278,6 @@ const createTodoElement = (d, isDeadlineFailed = false) => {
         border-radius: 0;
         padding-left: 1px;
         border: ${isDeadlineFailed ? "2px solid #ff4444" : "0.3px solid black"};
-        width: 800px;
         margin-bottom: 2px;
         display: flex;
         flex-direction: row;
