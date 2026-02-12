@@ -265,7 +265,6 @@ if (todoForm) {
     });
 }
 
-// Initial load
 updateAuthUI();
 if (isAuthenticated()) {
     getTodos();
