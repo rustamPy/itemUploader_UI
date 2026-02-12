@@ -1,4 +1,4 @@
-const API_BASE = "https://itemuploader.onrender.com/v1";
+const API_BASE = "http://127.0.0.1:8000/v1";
 const TOKEN_KEY = "auth_token";
 const USER_ID_KEY = "user_id";
 const USER_NAME_KEY = "username";
@@ -155,29 +155,46 @@ const getTodos = async () => {
         }
 
         data.todos.forEach(d => {
+            const colors = ["#fff9e6", "#e6f3ff", "#ffe6f0", "#f0e6ff", "#e6fff9", "#ffe6e6"];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            const randomRotation = (Math.random() - 0.5) * 4; // -2 to 2 degrees
+
             const todoEl = document.createElement("div");
             todoEl.style.cssText = `
-                padding: 5px;
-                border-radius: 5px;
+                padding: 1px 8px;
+                border-radius: 0;
                 border: 1px solid #ccc;
-                width: 300px;
-                margin-bottom: 10px;
+                width: 800px;
+                margin-bottom: 2px;
                 display: flex;
-                flex-direction: column;
-                gap: 10px;
-                ${d.completed ? "background-color: #b2ffb7;" : "background-color: #fff;"}
+                flex-direction: row;
+                gap: 4px;
+                align-items: center;
+                background-color: ${d.completed ? "#b2ffb7" : randomColor};
+                transform: rotate(${randomRotation}deg);
+                position: relative;
+                min-height: 28px;
             `;
 
             const deleteBtn = document.createElement("button");
-            deleteBtn.textContent = "Delete";
+            deleteBtn.textContent = "×";
             deleteBtn.style.cssText = `
-                align-self: flex-end;
-                padding: 5px 10px;
+                position: absolute;
+                top: -8px;
+                right: -8px;
+                width: 24px;
+                height: 24px;
+                padding: 0;
                 background-color: #ff6b6b;
                 color: white;
                 border: none;
-                border-radius: 3px;
+                border-radius: 0;
                 cursor: pointer;
+                font-size: 18px;
+                line-height: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             `;
             deleteBtn.addEventListener("click", () => deleteItem(d.id));
 
@@ -185,6 +202,8 @@ const getTodos = async () => {
             contentDiv.style.cssText = `
                 display: flex;
                 flex-direction: column;
+                flex: 1;
+                gap: 2px;
             `;
             contentDiv.innerHTML = `
                 <span style="font-size: 14px; font-weight: bold;">${d.title}</span>
@@ -193,6 +212,11 @@ const getTodos = async () => {
 
             const completeBtn = document.createElement("button");
             completeBtn.textContent = d.completed ? "✅ Done" : "Mark Complete";
+            completeBtn.style.cssText = `
+                white-space: nowrap;
+                padding: 5px 10px;
+                font-size: 12px;
+            `;
             completeBtn.addEventListener("click", () => markComplete(d.id));
 
             todoEl.appendChild(deleteBtn);
