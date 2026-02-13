@@ -74,8 +74,6 @@ npm run test:watch       # Watch mode
 npm run test:coverage    # With coverage report
 ```
 
-See [TESTING.md](./TESTING.md) for detailed testing documentation.
-
 ## CI/CD
 
 GitHub Actions workflows:
