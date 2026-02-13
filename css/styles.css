@@ -1,0 +1,188 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 10px;
+}
+
+#auth-section {
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    position: relative;
+    padding-right: 60px;
+    width: 100%;
+    min-width: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+}
+
+#userAvatar {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    border: 1px solid black;
+    border-radius: 50%;
+}
+
+button {
+    padding: 8px 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+#loginBtn {
+    background-color: #24292e;
+    color: white;
+}
+
+#loginBtn:hover {
+    background-color: #0366d6;
+}
+
+#loginBtnGi {
+    background-color: #24292e;
+    color: white;
+    margin-right: 10px;
+}
+
+#loginBtnGi:hover {
+    background-color: #0366d6;
+}
+
+#loginBtnGo {
+    background-color: #4285f4;
+    color: white;
+    margin-right: 10px;
+}
+
+#loginBtnGo:hover {
+    background-color: #357ae8;
+}
+
+#logoutBtn {
+    background-color: #dc3545;
+    color: white;
+}
+
+#logoutBtn:hover {
+    background-color: #c82333;
+}
+
+#todoForm {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    width: 100%;
+    min-width: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#todoForm input {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 100%;
+    font-size: 14px;
+}
+
+#todoForm select {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 100%;
+}
+
+#todoForm button {
+    background-color: #28a745;
+    color: white;
+    width: 100%;
+}
+
+#todoForm button:hover {
+    background-color: #218838;
+}
+
+a {
+    color: #0366d6;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.progress-section {
+    margin: 15px 0;
+    padding: 8px;
+    background-color: #f5f5f5;
+    border: 1px solid #999;
+    border-radius: 0;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 16px;
+    background-color: #e0e0e0;
+    border: 1px solid #999;
+    margin: 5px 0;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: #4CAF50;
+    transition: width 0.3s;
+}
+
+.section-header {
+    font-weight: bold;
+    font-size: 13px;
+    margin: 10px 0 5px 0;
+    cursor: pointer;
+    user-select: none;
+}
+
+.section-header:hover {
+    text-decoration: underline;
+}
+
+.section-count {
+    display: inline;
+    background-color: #ccc;
+    padding: 2px 6px;
+    border: 1px solid #999;
+    border-radius: 0;
+    margin-left: 5px;
+    font-size: 11px;
+}
+
+.todo-section {
+    margin: 5px 0;
+}
+
+h1 {
+    font-size: 24px;
+    margin: 15px 0 10px 0;
+}
+
+p {
+    font-size: 14px;
+    margin: 10px 0;
+}
